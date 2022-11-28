@@ -56,7 +56,29 @@ class _HomeScreenState extends State<HomeScreen> {
                   vertical: 8,
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    Dismissible(
+                      background: Container(
+                        color: Colors.red,
+                        child: Text(
+                          '삭제하기',
+                        ),
+                      ),
+                      secondaryBackground: Container(
+                        color: Colors.green,
+                        child: Text(
+                          '삭제하기',
+                        ),
+                      ),
+                      key: Key('hi'),
+                      child: ListTile(
+                        title: Text('할 일'),
+                      ),
+                      onDismissed: (direction) {
+                        print(direction);
+                      },
+                    ),
                     Text('hi'),
                     Text('hi'),
                     Text('hi'),
