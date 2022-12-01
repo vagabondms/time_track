@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:time_tracking/widgets/custom_dismissible/src/dismissible.dart';
+
+import '../widgets/custom_dismissible/src/action_pane.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -58,26 +61,43 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    CustomDismissible(
+                      startPane: ActionPane(
+                        children: [
+                          ActionPaneItem(
+                            child: Text('hi'),
+                          ),
+                        ],
+                      ),
+                      endPane: ActionPane(
+                        children: [
+                          ActionPaneItem(
+                            child: Text('bye'),
+                          ),
+                        ],
+                      ),
+                      child: Container(
+                        height: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                    Divider(),
                     Dismissible(
+                      key: UniqueKey(),
+                      child: Container(
+                        height: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                        ),
+                      ),
                       background: Container(
-                        color: Colors.red,
-                        child: Text(
-                          '삭제하기',
+                        height: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
                         ),
                       ),
-                      secondaryBackground: Container(
-                        color: Colors.green,
-                        child: Text(
-                          '삭제하기',
-                        ),
-                      ),
-                      key: Key('hi'),
-                      child: ListTile(
-                        title: Text('할 일'),
-                      ),
-                      onDismissed: (direction) {
-                        print(direction);
-                      },
                     ),
                     Text('hi'),
                     Text('hi'),

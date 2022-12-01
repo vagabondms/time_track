@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:time_tracking/screens/home_screen.dart';
-import 'package:time_tracking/screens/settings_screen.dart';
+import 'package:time_tracking/screens/statistics_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +39,6 @@ class _MainState extends State<_Main> {
   final List<Widget> screens = const <Widget>[
     HomeScreen(),
     SettingsScreen(),
-    SettingsScreen(),
   ];
 
   @override
@@ -66,15 +65,9 @@ class _MainState extends State<_Main> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.settings,
+              Icons.auto_graph,
             ),
             label: 'Statistics',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.settings,
-            ),
-            label: 'Settings',
           ),
         ],
       ),
