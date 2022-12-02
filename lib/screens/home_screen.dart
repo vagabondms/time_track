@@ -64,22 +64,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       startPane: ActionPane(
                         children: [
                           ActionPaneItem(
-                            child: Container(
-                              color: Colors.blue,
-                              width: 100,
-                              height: 100,
-                            ),
+                            child: Text('1'),
+                          ),
+                          ActionPaneItem(
+                            child: Text('2'),
                           ),
                         ],
                       ),
                       endPane: ActionPane(
                         children: [
                           ActionPaneItem(
-                            child: Container(
-                              color: Colors.green,
-                              height: 100,
-                              width: 100,
-                            ),
+                            child: Text('1'),
+                          ),
+                          ActionPaneItem(
+                            child: Text('2'),
                           ),
                         ],
                       ),
