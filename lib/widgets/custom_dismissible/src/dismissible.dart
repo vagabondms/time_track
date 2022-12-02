@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_tracking/widgets/custom_dismissible/custom_dismissible.dart';
 import 'package:time_tracking/widgets/custom_dismissible/src/dismissible_slider.dart';
 
 import 'action_pane.dart';
@@ -32,20 +33,87 @@ class _CustomDismissibleState extends State<CustomDismissible>
     _controller = CustomDismissibleController(this);
   }
 
+  ActionPane? get startPane => widget.startPane;
+  ActionPane? get endPane => widget.endPane;
+  ActionPane? get actionPane {
+    switch (_controller.actionPaneType.value) {
+      case ActionPaneType.start:
+        return startPane;
+      case ActionPaneType.end:
+        return endPane;
+      default:
+        return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DismissibleGestureDetector(
       controller: _controller,
       child: ClipRect(
-        child: Stack(
-          children: [
-            DismissibleSlider(
-              controller: _controller,
-              child: widget.child,
-            ),
-          ],
+        child: AnimatedBuilder(
+          animation: _controller.actionPaneType,
+          builder: (context, Widget? child) {
+            return Stack(
+              children: [
+                //ActionPaneConfig
+                AnimatedBuilder(
+                    animation: _controller.direction,
+                    builder: (context, child) {
+                      final sign = _controller.direction.value.toDouble();
+                      final actionPaneAlignment = Alignment(-sign, 0);
+
+                      return ActionPaneConfiguration(
+                        configure: ActionPaneConfig(
+                          alignment: actionPaneAlignment,
+                        ),
+                        child: Positioned.fill(
+                          child: FractionallySizedBox(
+                            alignment: actionPaneAlignment,
+                            child: actionPane,
+                          ),
+                        ),
+                      );
+                    }),
+                DismissibleSlider(
+                  controller: _controller,
+                  child: widget.child,
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
+  }
+}
+
+class ActionPaneConfig {
+  ActionPaneConfig({
+    required this.alignment,
+  });
+
+  final Alignment alignment;
+}
+
+class ActionPaneConfiguration extends InheritedWidget {
+  const ActionPaneConfiguration({
+    Key? key,
+    required Widget child,
+    required this.configure,
+  }) : super(key: key, child: child);
+
+  final ActionPaneConfig configure;
+
+  static ActionPaneConfig of(BuildContext context) {
+    final ActionPaneConfiguration? result =
+        context.dependOnInheritedWidgetOfExactType<ActionPaneConfiguration>();
+    assert(result != null, 'No ActionPaneConfiguration found in context');
+    return result!.configure;
+  }
+
+  @override
+  bool updateShouldNotify(ActionPaneConfiguration oldWidget) {
+    return configure != oldWidget.configure;
   }
 }

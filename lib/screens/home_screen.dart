@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:time_tracking/widgets/custom_dismissible/src/dismissible.dart';
 
-import '../widgets/custom_dismissible/src/action_pane.dart';
+import '../widgets/custom_dismissible/custom_dismissible.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -48,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 calendarBuilders: CalendarBuilders(),
               ),
             ),
-            Divider(
+            const Divider(
               height: 0,
               thickness: 1,
             ),
@@ -65,37 +64,45 @@ class _HomeScreenState extends State<HomeScreen> {
                       startPane: ActionPane(
                         children: [
                           ActionPaneItem(
-                            child: Text('hi'),
+                            child: Container(
+                              color: Colors.blue,
+                              width: 100,
+                              height: 100,
+                            ),
                           ),
                         ],
                       ),
                       endPane: ActionPane(
                         children: [
                           ActionPaneItem(
-                            child: Text('bye'),
+                            child: Container(
+                              color: Colors.green,
+                              height: 100,
+                              width: 100,
+                            ),
                           ),
                         ],
                       ),
                       child: Container(
                         height: 200,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.red,
                         ),
                       ),
                     ),
-                    Divider(),
+                    const Divider(),
                     Dismissible(
                       key: UniqueKey(),
-                      child: Container(
-                        height: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                        ),
-                      ),
                       background: Container(
                         height: 200,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.black,
+                        ),
+                      ),
+                      child: Container(
+                        height: 200,
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
                         ),
                       ),
                     ),

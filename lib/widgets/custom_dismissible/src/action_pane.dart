@@ -1,36 +1,40 @@
 import 'package:flutter/material.dart';
 
-class ActionPane extends StatelessWidget {
+import 'action.dart';
+import 'dismissible.dart';
+
+enum PaneAlignment {
+  left,
+  right,
+}
+
+class ActionPane extends StatefulWidget {
   final List<ActionPaneItem> children;
+  final double extentRatio;
 
   const ActionPane({
     Key? key,
     required this.children,
+    this.extentRatio = 0.3,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: children,
-    );
-  }
+  State<ActionPane> createState() => _ActionPaneState();
 }
 
-class ActionPaneItem extends StatelessWidget {
-  final Widget child;
-  final Color? color;
-
-  const ActionPaneItem({
-    Key? key,
-    required this.child,
-    this.color,
-  }) : super(key: key);
-
+class _ActionPaneState extends State<ActionPane> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: color ?? Colors.grey,
-      child: child,
+    final actionPaneConfig = ActionPaneConfiguration.of(context);
+
+    final factor = widget.extentRatio;
+    return FractionallySizedBox(
+      alignment: actionPaneConfig.alignment,
+      widthFactor: factor,
+      child: Flex(
+        direction: Axis.horizontal,
+        children: widget.children,
+      ),
     );
   }
 }

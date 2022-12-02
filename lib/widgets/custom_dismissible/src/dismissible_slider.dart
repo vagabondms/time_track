@@ -21,19 +21,18 @@ class _DismissibleSliderState extends State<DismissibleSlider> {
   late Animation<Offset> animation;
 
   @override
-  void initState() {
-    super.initState();
-    animation = Tween<Offset>(
-      begin: Offset(0, 0),
-      end: Offset(1, 0),
-    ).animate(widget.controller.animation);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return SlideTransition(
-      position: animation,
-      child: widget.child,
+    return AnimatedBuilder(
+      animation: widget.controller.direction,
+      builder: (BuildContext context, Widget? child) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 0),
+            end: Offset(widget.controller.direction.value, 0),
+          ).animate(widget.controller.animation),
+          child: widget.child,
+        );
+      },
     );
   }
 }

@@ -30,10 +30,14 @@ class _DismissibleGestureDetectorState
 
   void _handleDragUpdate(DragUpdateDetails details) {
     dragExtent += details.primaryDelta!;
-    widget.controller.ratio = dragExtent / overallDragAxisExtent;
+    widget.controller.updateDirection(dragExtent.sign);
+    widget.controller.ratio = dragExtent.abs() / overallDragAxisExtent;
   }
 
-  void _handleDragEnd(DragEndDetails details) {}
+  void _handleDragEnd(DragEndDetails details) {
+    widget.controller.close();
+    dragExtent = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
