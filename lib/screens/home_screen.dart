@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     CustomDismissible(
-                      startPane: ActionPane(
+                      startPane: const ActionPane(
                         children: [
                           ActionPaneItem(
                             child: Text('1'),
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
-                      endPane: ActionPane(
+                      endPane: const ActionPane(
                         children: [
                           ActionPaneItem(
                             child: Text('1'),

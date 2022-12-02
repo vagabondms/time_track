@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'action_pane.dart';
+
 const Duration _defaultDuration = Duration(milliseconds: 300);
 
 enum Direction {
@@ -27,19 +29,39 @@ class CustomDismissibleController {
     _animationController.value = ratio;
   }
 
+  bool _startPaneActivated = false;
+  double _startPaneExtendRatio = 0;
+  void activateStartPane(ActionPane? actionPane) {
+    if (actionPane != null) {
+      _startPaneActivated = true;
+      _startPaneExtendRatio = actionPane.extentRatio;
+    }
+  }
+
+  bool _endPaneActivated = false;
+  double _endPaneExtendRatio = 0;
+  void activateEndPane(ActionPane? actionPane) {
+    if (actionPane != null) {
+      _endPaneActivated = true;
+      _endPaneExtendRatio = actionPane.extentRatio;
+    }
+  }
+
   ValueNotifier<double> direction = ValueNotifier(0);
   void updateDirection(double direction) {
     if (direction != this.direction.value) {
-      this.direction.value = direction;
-      switch (direction.toInt()) {
-        case -1:
-          _actionPaneType.value = ActionPaneType.end;
-          break;
-        case 1:
-          _actionPaneType.value = ActionPaneType.start;
-          break;
-        default:
-          _actionPaneType.value = ActionPaneType.start;
+      final int sign = direction.toInt();
+
+      if (sign == -1 && _endPaneActivated) {
+        this.direction.value = direction;
+        _actionPaneType.value = ActionPaneType.end;
+        return;
+      }
+
+      if (sign == 1 && _startPaneActivated) {
+        this.direction.value = direction;
+        _actionPaneType.value = ActionPaneType.start;
+        return;
       }
     }
   }

@@ -30,7 +30,9 @@ class _CustomDismissibleState extends State<CustomDismissible>
   @override
   void initState() {
     super.initState();
-    _controller = CustomDismissibleController(this);
+    _controller = CustomDismissibleController(this)
+      ..activateStartPane(startPane)
+      ..activateEndPane(endPane);
   }
 
   ActionPane? get startPane => widget.startPane;
