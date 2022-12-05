@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import '../widgets/custom_dismissible/custom_dismissible.dart';
+import 'package:time_tracking/screens/new_task_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -22,117 +21,52 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 2,
-                  blurRadius: 2,
-                  offset: Offset(0, 1), // changes position of shadow
-                ),
-              ]),
-              child: TableCalendar(
-                locale: 'ko_KR',
-                onDaySelected: onDaySelected,
-                firstDay: DateTime.utc(2010, 10, 16),
-                lastDay: DateTime.utc(2999, 12, 31),
-                focusedDay: _selectedDay,
-                selectedDayPredicate: (DateTime day) {
-                  return day == _selectedDay;
-                },
-                calendarBuilders: CalendarBuilders(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => const NewTaskScreen(),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            decoration: BoxDecoration(color: Colors.white, boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 2,
+                blurRadius: 2,
+                offset: Offset(0, 1), // changes position of shadow
+              ),
+            ]),
+            child: TableCalendar(
+              locale: 'ko_KR',
+              onDaySelected: onDaySelected,
+              firstDay: DateTime.utc(2010, 10, 16),
+              lastDay: DateTime.utc(2999, 12, 31),
+              focusedDay: _selectedDay,
+              selectedDayPredicate: (DateTime day) {
+                return day == _selectedDay;
+              },
+              calendarBuilders: CalendarBuilders(),
+            ),
+          ),
+          const Divider(
+            height: 0,
+            thickness: 1,
+          ),
+          Expanded(
+              child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8,
               ),
             ),
-            const Divider(
-              height: 0,
-              thickness: 1,
-            ),
-            Expanded(
-                child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    CustomDismissible(
-                      startPane: const ActionPane(
-                        children: [
-                          ActionPaneItem(
-                            child: Text('1'),
-                          ),
-                          ActionPaneItem(
-                            child: Text('2'),
-                          ),
-                        ],
-                      ),
-                      endPane: const ActionPane(
-                        children: [
-                          ActionPaneItem(
-                            child: Text('1'),
-                          ),
-                          ActionPaneItem(
-                            child: Text('2'),
-                          ),
-                        ],
-                      ),
-                      child: Container(
-                        height: 200,
-                        decoration: const BoxDecoration(
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
-                    const Divider(),
-                    Dismissible(
-                      key: UniqueKey(),
-                      background: Container(
-                        height: 200,
-                        decoration: const BoxDecoration(
-                          color: Colors.black,
-                        ),
-                      ),
-                      child: Container(
-                        height: 200,
-                        decoration: const BoxDecoration(
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                    Text('hi'),
-                  ],
-                ),
-              ),
-            )),
-          ],
-        ),
+          )),
+        ],
       ),
     );
   }
