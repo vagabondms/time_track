@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:time_tracking/screens/home_screen.dart';
-import 'package:time_tracking/screens/statistics_screen.dart';
+import 'package:time_tracking/presentation/screens/home_screen.dart';
+import 'package:time_tracking/presentation/screens/statistics_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,29 +48,6 @@ class _MainState extends State<_Main> {
         title: const Text('트레꺼'),
       ),
       body: screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (int currentIndex) {
-          HapticFeedback.lightImpact();
-          setState(() {
-            _currentIndex = currentIndex;
-          });
-        },
-        currentIndex: _currentIndex,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.auto_graph,
-            ),
-            label: 'Statistics',
-          ),
-        ],
-      ),
     );
   }
 }

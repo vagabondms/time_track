@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:time_tracking/screens/new_task_screen.dart';
+import 'package:time_tracking/presentation/screens/new_task_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -23,9 +24,35 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet(
+          showGeneralDialog(
             context: context,
-            builder: (context) => const NewTaskScreen(),
+            pageBuilder: (context, animation, secondaryAnimation) {
+              /// This is the simplest use case for [CupertinoFullscreenDialogTransition]
+              /// This provides the slide up and slide down transition effects
+              return CupertinoFullscreenDialogTransition(
+                primaryRouteAnimation: animation,
+                secondaryRouteAnimation: secondaryAnimation,
+
+                /// Content of your dialog
+                child: const NewTaskScreen(),
+                linearTransition: true,
+              );
+            },
+            transitionBuilder: (context, animation, secondaryAnimation, child) {
+              const begin = Offset(0.0, 1.0);
+              const end = Offset.zero;
+              const curve = Curves.ease;
+
+              final tween = Tween(begin: begin, end: end);
+              final curvedAnimation = CurveTween(curve: curve);
+
+              final transition = tween.chain(curvedAnimation);
+
+              return SlideTransition(
+                position: animation.drive(transition),
+                child: child,
+              );
+            },
           );
         },
         child: const Icon(Icons.add),
