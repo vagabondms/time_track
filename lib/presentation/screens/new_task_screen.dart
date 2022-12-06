@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 //** 필요정보
@@ -31,8 +32,11 @@ class NewTaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Text('hi'),
+      appBar: CupertinoNavigationBar(),
+      body: Container(
+        height: MediaQuery.of(context).size.height * 0.8,
+        child: Text('hi'),
+      ),
     );
   }
 }
